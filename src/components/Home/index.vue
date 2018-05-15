@@ -1,19 +1,28 @@
 <template>
-    <div class="hello">
-        <h1>{{ this.text }}</h1>
+    <div class="col-6p">
+        <Ideas />
+        <!--<Map />-->
     </div>
 </template>
 
 <script>
+    // import Map from '../Map';
+    import Ideas from '../Ideas';
+
 	export default {
-		name: 'Home page',
-		props: {
-			msg: String
-		},
-        data() {
-            return {
-                text: 'hello',
-            };
+		name: 'Homepage',
+		components: {
+            Ideas,
+			Map,
         },
+		data() {
+			return {}
+		},
 	}
 </script>
+
+<style lang="less">
+    /*.col-6p {*/
+        /*width: 66.6%;*/
+    /*}*/
+</style>
