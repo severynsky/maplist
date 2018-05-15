@@ -1,28 +1,28 @@
 <template>
     <div class="col-6p">
-        <Ideas />
+        <Ideas/>
         <!--<Map />-->
     </div>
 </template>
 
 <script>
-    // import Map from '../Map';
-    import Ideas from '../Ideas';
+	// import Map from '../Map';
+	import Ideas from '../Ideas';
 
 	export default {
 		name: 'Homepage',
 		components: {
-            Ideas,
+			Ideas,
 			Map,
-        },
+		},
 		data() {
 			return {}
-		},
+		}
 	}
 </script>
 
 <style lang="less">
     /*.col-6p {*/
-        /*width: 66.6%;*/
+    /*width: 66.6%;*/
     /*}*/
 </style>
