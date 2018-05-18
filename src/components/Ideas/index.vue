@@ -1,44 +1,34 @@
 <template>
     <div id="ideas-list">
-        <ul class="ideas-list" v-if="ideasList.length > 0">
-            <li class="idea" v-for="idea in this.ideasList" :key="idea.location.latitude">
-                <router-link :to="idea.name">
-                    <img :src="snapshotHandler(idea.location)" alt="" class="location-snapshot">
-                    <div class="location-info">
-                        <h3>{{ idea.title }}</h3>
-
-                        <div class="meta-info">
-                            <p class="small">{{ idea.location.description }}</p>
-                            <p class="category">{{ idea.category }}</p>
-                        </div>
-                        <p class="idea-body">{{ idea.body }}</p>
-                        <p class="author">
-                            created by: <b>{{ idea.author.fullName }}</b>
-                        </p>
-                        <ul class="author-rank">
-                            <li v-for="item in idea.author.rank" :key="item">
-                                *
-                            </li>
-                        </ul>
-                    </div>
-                </router-link>
-            </li>
-        </ul>
+        <div class="view-selector">
+            <button :class="[viewType === 'listView' ? 'active' : '']" @click="handleView('listView')">list</button>
+            <button :class="[viewType === 'mapView' ? 'active' : '']" @click="handleView('mapView')">map</button>
+        </div>
+        <div id="list-container" v-if="this.viewType === 'listView'">
+            <List :data="this.ideasList"/>
+        </div>
+        <div id="map-container" v-if="this.viewType === 'mapView'">
+            <Map :data="this.ideasList"/>
+        </div>
     </div>
 </template>
 
 <script>
 	import mockData from '../../helpers/mockData';
+	import List from './components/List';
+	import Map from '../Map';
 	import snapshotHelper from '../../helpers/snapshotHelper';
 
 	export default {
 		name: 'Ideas',
 		components: {
+			List,
 			Map
 		},
 		data() {
 			return {
 				ideasList: mockData,
+				viewType: 'listView',
 			}
 		},
 		mounted() {
@@ -46,6 +36,9 @@
 		methods: {
 			snapshotHandler(data) {
 				return snapshotHelper(data, '160x160', '15');
+			},
+			handleView(data) {
+				this.viewType = data;
 			}
 		},
 	}
@@ -54,6 +47,24 @@
 <style lang="less">
     .col-6p {
         /*width: 66.6%;*/
+    }
+
+    .view-selector {
+        width: 140px;
+        margin: 0 auto 10px;
+        button {
+            padding: 5px 10px;
+            border: 1px solid tomato;
+            border-radius: 5px;
+            font-size: 16px;
+            color: tomato;
+            outline: none;
+            cursor: pointer;
+            &.active {
+                background-color: tomato;
+                color: white;
+            }
+        }
     }
 
     #ideas-list {

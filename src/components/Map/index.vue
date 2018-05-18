@@ -10,19 +10,19 @@
 </template>
 
 <script>
-	import mockData from '../../helpers/mockData';
+	// import mockData from '../../helpers/mockData';
 
 	export default {
 		name: 'Map',
 		props: {
-			msg: String
+			data: Array
 		},
 		data() {
 			let markerArray = [];
 			return {
 				text: 'hello',
 				mapName: "main-map",
-				markerCoordinates: mockData,
+				markerCoordinates: this.data,
 				map: null,
 				bounds: null,
 				markers: markerArray,
@@ -31,7 +31,7 @@
 		},
 		watch: {
 			markers(newValue) {
-				console.log('markers: ', newValue);
+				// console.log('markers: ', newValue);
 			}
 		},
 		mounted: function () {
@@ -39,11 +39,20 @@
 		},
 		methods: {
 			openInfo(item) {
-				let content = `<div id="content">${item.content.title} ${item.content.body}</div>`
+				// debugger;
+
+				// let content = `<div id="content">${item.content.title} ${item.content.body}</div>`
+				let content = `
+                    <div id="content">
+                        <p><b>${item.content.title}</b></p>
+                        <p>${item.content.location.description}</p>
+                        <button @click="viewIdea">view</button>
+                    </div>
+                    `;
 				let infowindow = new google.maps.InfoWindow({
 					content,
 				});
-				infowindow.open(this.map, content);
+				infowindow.open(this.map, item);
 			},
 			createMap() {
 
@@ -55,7 +64,7 @@
 				}
 				this.map = new google.maps.Map(element, options);
 				this.markerCoordinates.forEach((coord) => {
-					const position = new google.maps.LatLng(coord.latitude, coord.longitude);
+					const position = new google.maps.LatLng(coord.location.latitude, coord.location.longitude);
 					const marker = new google.maps.Marker({
 						position,
 						map: this.map,
@@ -82,7 +91,10 @@
 			},
 			printPosition() {
 				navigator.geolocation.getCurrentPosition(this.alertCoords);
-			}
+			},
+			viewIdea() {
+
+            }
 		}
 
 	}

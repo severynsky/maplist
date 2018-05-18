@@ -17,7 +17,7 @@ export default {
 
 <style lang="less">
   body {
-    padding: 0;
+    padding: 10px 0;
     margin: 0;
   }
   #app {
